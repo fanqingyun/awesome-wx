@@ -15,10 +15,12 @@ module.exports = (message) => {
     }
     // 根据key进行字典排序
     let arr = Object.keys(params).sort()
+    // 获取排序后的参数
     let newParams = {}
     for (let index = 0; index < arr.length; index++) {
       newParams[arr[index]] = params[arr[index]]
     }
+    // encodeURI这里如果不加，发送中文会有问题
     let str = ''
     for (let key in newParams) {
       str += `${key}=${encodeURI(newParams[key])}&`

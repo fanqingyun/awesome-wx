@@ -26,8 +26,14 @@ module.exports = () => {
         let xmlData = await Tool.getUserDataAsync(req)
         let jsData = await Tool.parseXMLAsync(xmlData)
         let message = Tool.formatMessage(jsData)
-        let msg = await Robot(message)
-        res.send(msg)
+        console.log(message)
+        if (message.MsgType === 'event') {
+          msg = `<xml><ToUserName><![CDATA[${message.FromUserName}]]></ToUserName><FromUserName><![CDATA[${message.ToUserName}]]></FromUserName><CreateTime>${Date.now()}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[功能正在开发中，敬请期待哦]]></Content></xml>`
+          res.send(msg)
+        } else {
+          let msg = await Robot(message)
+          res.send(msg)
+        }
       }
     }
   }

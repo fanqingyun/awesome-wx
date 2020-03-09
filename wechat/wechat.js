@@ -64,7 +64,6 @@ class WeChat {
   // 获取有效的accessToken
   fetchAccessToken () {
     if (this.isValidAccessToken()) {
-      console.log('jinlia')
       return Promise.resolve({
         access_token: this.access_token,
         expires_in: this.expires_in

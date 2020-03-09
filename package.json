@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/fanqingyun/awesome-wx#readme",
   "dependencies": {
+    "ejs": "^3.0.1",
     "express": "^4.17.1",
     "md5": "^2.2.1",
     "md5-node": "^1.0.1",
