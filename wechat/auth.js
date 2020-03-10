@@ -1,8 +1,9 @@
 const sha1 = require('sha1')
 const config = require('../config')
-const { token } = config
+const { token, appID } = config
 const Tool = require('../utils/tool')
 const Robot = require('./robot')
+const rp = require('request-promise-native')
 // 微信服务器会向项目服务器发送2种请求，post和get,get请求用于验证服务器的有效性
 // 验证签名
 module.exports = () => {
@@ -28,8 +29,13 @@ module.exports = () => {
         let message = Tool.formatMessage(jsData)
         console.log(message)
         if (message.MsgType === 'event') {
-          msg = `<xml><ToUserName><![CDATA[${message.FromUserName}]]></ToUserName><FromUserName><![CDATA[${message.ToUserName}]]></FromUserName><CreateTime>${Date.now()}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[功能正在开发中，敬请期待哦]]></Content></xml>`
-          res.send(msg)
+          if (message.Event === 'CLICK') {
+            msg = `<xml><ToUserName><![CDATA[${message.FromUserName}]]></ToUserName><FromUserName><![CDATA[${message.ToUserName}]]></FromUserName><CreateTime>${Date.now()}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[功能正在开发中，敬请期待哦]]></Content></xml>`
+            res.send(msg)
+          } else {
+            msg = `<xml><ToUserName><![CDATA[${message.FromUserName}]]></ToUserName><FromUserName><![CDATA[${message.ToUserName}]]></FromUserName><CreateTime>${Date.now()}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[功能正在开发中，敬请期待哦]]></Content></xml>`
+            res.send(msg)
+          }
         } else {
           let msg = await Robot(message)
           res.send(msg)
@@ -38,3 +44,4 @@ module.exports = () => {
     }
   }
 }
+// 
